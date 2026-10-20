@@ -1,0 +1,22 @@
+# Private configuration and repository payloads must never enter Git.
+.env
+.env.*
+!.env.example
+**/.env
+**/.env.*
+!**/.env.example
+.repomedic/
+**/.repomedic/
+.cache/
+**/.m2/
+**/node_modules/
+**/target/
+**/dist/
+backend/src/main/resources/static/
+frontend/public/demo/
+examples/*.zip
+*.log
+.DS_Store
+.idea/
+.vscode/
+coverage/
