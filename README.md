@@ -9,7 +9,12 @@ side-by-side source changes, real test output, and a downloadable Markdown repor
 
 ## Submission demo
 
-**[Watch the 42-second demo recording](./assets/repomedic-demo.mov)**
+**Demo video:** [Watch the 42-second recording](https://github.com/milendrakumarbaghel/RepoMedic-AI/raw/refs/heads/main/assets/repomedic-demo.mov)
+
+Direct video URL for submission scanners:
+`https://github.com/milendrakumarbaghel/RepoMedic-AI/raw/refs/heads/main/assets/repomedic-demo.mov`
+
+Repository copy: [`assets/repomedic-demo.mov`](./assets/repomedic-demo.mov)
 
 The recording uses the real packaged application and shows the complete winning
 flow: launch the broken React diagnosis, inspect the failing test evidence,

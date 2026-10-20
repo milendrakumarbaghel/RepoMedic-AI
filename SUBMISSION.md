@@ -6,6 +6,7 @@
 - Default branch: `main`
 - Main README: [`README.md`](README.md)
 - Demo recording: [`assets/repomedic-demo.mov`](assets/repomedic-demo.mov)
+- Direct demo video URL: `https://github.com/milendrakumarbaghel/RepoMedic-AI/raw/refs/heads/main/assets/repomedic-demo.mov`
 - Rebuild evidence: [`reports/reproducibility.md`](reports/reproducibility.md)
 - Diagnostic report: [`reports/demo-diagnostic.md`](reports/demo-diagnostic.md)
 - Patch artifact: [`reports/demo-fix.patch`](reports/demo-fix.patch)
