@@ -11,7 +11,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "node scripts/test.mjs"
+    "test": "node scripts/test.mjs",
+    "test:browser": "node --import tsx scripts/browser-smoke.mjs"
   },
   "dependencies": {
     "@tailwindcss/vite": "4.3.3",
@@ -21,15 +22,21 @@
     "tailwindcss": "4.3.3"
   },
   "devDependencies": {
-    "@eslint/js": "^10.0.1",
+    "@eslint/js": "9.39.1",
+    "@testing-library/dom": "10.4.2",
+    "@testing-library/react": "16.3.3",
+    "@testing-library/user-event": "14.6.8",
+    "@types/jsdom": "30.0.0",
     "@types/node": "^24.19.2",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.2",
-    "eslint": "^10.13.0",
+    "eslint": "9.39.1",
     "eslint-plugin-react-hooks": "^7.1.1",
     "eslint-plugin-react-refresh": "^0.5.7",
     "globals": "^17.13.0",
+    "jsdom": "26.1.0",
+    "tsx": "4.23.15",
     "typescript": "~6.0.3",
     "typescript-eslint": "^8.71.2",
     "vite": "^8.3.4"

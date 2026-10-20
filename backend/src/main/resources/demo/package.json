@@ -1,0 +1,8 @@
+{
+  "name": "repomedic-shopping-cart-demo",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": { "test": "node --test" },
+  "engines": { "node": "23.10.0" }
+}

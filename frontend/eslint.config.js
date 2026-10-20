@@ -19,4 +19,8 @@ export default defineConfig([
       globals: globals.browser,
     },
   },
+  {
+    files: ['tests/**/*.{ts,tsx,mjs}', 'scripts/**/*.mjs'],
+    languageOptions: { globals: { ...globals.node, ...globals.browser } },
+  },
 ])

@@ -6,7 +6,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
     response = await fetch(`/api${path}`, init)
   } catch (error) {
     if (error instanceof Error && error.name === 'AbortError') throw error
-    throw new Error('The local engine could not be reached. Check that the backend is running and try again.')
+    throw new Error('The local engine could not be reached. Check that the backend is running and try again.', { cause: error })
   }
   if (!response.ok) {
     let message = `The engine returned an error (${response.status}). Please try again.`

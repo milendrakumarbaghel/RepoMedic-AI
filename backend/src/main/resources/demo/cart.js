@@ -1,0 +1,15 @@
+/** Pure shopping-cart calculation, shared by the React view and Node tests. */
+export function calculateTotal(items, discountPercent = 0) {
+  if (!Array.isArray(items)) throw new TypeError('items must be an array');
+  if (!Number.isFinite(discountPercent) || discountPercent < 0 || discountPercent > 100) {
+    throw new RangeError('discount must be between 0 and 100');
+  }
+  const subtotal = items.reduce((sum, item) => {
+    if (!Number.isFinite(item.price) || item.price < 0 || !Number.isInteger(item.quantity) || item.quantity < 0) {
+      throw new RangeError('invalid cart item');
+    }
+    return sum + item.price * item.quantity;
+  }, 0);
+  const discount = subtotal * discountPercent;
+  return Math.round((subtotal - discount) * 100) / 100;
+}

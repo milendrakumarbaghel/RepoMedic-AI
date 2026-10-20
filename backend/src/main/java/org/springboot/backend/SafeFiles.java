@@ -2,6 +2,8 @@ package org.springboot.backend;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
+import java.nio.charset.CharacterCodingException;
+import java.nio.ByteBuffer;
 import java.nio.file.*;
 import java.nio.file.attribute.PosixFilePermissions;
 import java.util.Comparator;
@@ -12,7 +14,7 @@ import java.util.Set;
 final class SafeFiles {
     static final int MAX_SOURCE_BYTES = 256 * 1024;
     private static final Set<String> IGNORED = Set.of(".git", ".svn", ".hg", "node_modules", "target",
-            "dist", "build", ".repomedic", ".ssh", ".aws", ".azure", ".kube", "__macosx");
+            "dist", "build", ".repomedic", ".ssh", ".aws", ".azure", ".kube", ".docker", "__macosx");
     private static final Set<String> EXTENSIONS = Set.of("js", "jsx", "mjs", "cjs", "ts", "tsx", "java",
             "json", "html", "css", "md", "xml", "properties", "yaml", "yml", "txt");
 
@@ -32,10 +34,14 @@ final class SafeFiles {
     }
 
     static boolean ignored(String name) {
+        String normalized = name.replace('\\', '/').toLowerCase(Locale.ROOT);
+        if (normalized.equals("git/config") || normalized.endsWith("/git/config")) return true;
         for (String part : name.replace('\\', '/').split("/")) {
             String p = part.toLowerCase(Locale.ROOT);
             if (IGNORED.contains(p) || p.startsWith(".env") || p.equals(".npmrc") || p.equals(".netrc")
-                    || p.equals(".gitconfig") || p.equals(".git-credentials") || p.equals("config.json")
+                    || p.equals(".gitconfig") || p.equals("gitconfig") || p.equals(".gitmodules")
+                    || p.equals(".git-credentials") || p.equals("config.json") || p.equals(".dockercfg")
+                    || p.equals(".yarnrc.yml") || p.equals(".pypirc") || p.equals("auth.json")
                     || p.contains("credential") || p.contains("secret") || p.equals("id_rsa")
                     || p.startsWith("id_ed25519") || p.endsWith(".pem") || p.endsWith(".key")
                     || p.endsWith(".p12") || p.endsWith(".pfx") || p.equals("settings.xml")) return true;
@@ -74,7 +80,8 @@ final class SafeFiles {
         if (Files.size(path) > MAX_SOURCE_BYTES) return null;
         byte[] bytes = Files.readAllBytes(path);
         for (byte b : bytes) if (b == 0) return null;
-        return new String(bytes, StandardCharsets.UTF_8);
+        try { return StandardCharsets.UTF_8.newDecoder().decode(ByteBuffer.wrap(bytes)).toString(); }
+        catch (CharacterCodingException e) { return null; }
     }
 
     static boolean isSource(String path) {
