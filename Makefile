@@ -1,4 +1,4 @@
-.PHONY: setup test build run dev smoke demo-zip docker-build docker-test
+.PHONY: setup test build run dev smoke demo-zip record-demo docker-build docker-test
 
 setup:
 	node scripts/project.mjs setup
@@ -21,6 +21,9 @@ smoke:
 
 demo-zip:
 	node scripts/demo-zip.mjs
+
+record-demo:
+	node scripts/record-demo.mjs
 
 docker-build:
 	docker build -t repomedic-ai:local .

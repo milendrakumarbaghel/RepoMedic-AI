@@ -7,6 +7,23 @@ Spring Boot 4.1.1 / Java 25**. Import a public GitHub repository, upload a ZIP,
 or use the deliberately broken React cart. Review line-referenced findings,
 side-by-side source changes, real test output, and a downloadable Markdown report.
 
+## Submission demo
+
+**[Watch the 42-second demo recording](./assets/repomedic-demo.mov)**
+
+The recording uses the real packaged application and shows the complete winning
+flow: launch the broken React diagnosis, inspect the failing test evidence,
+review the line-level side-by-side patch, apply it, rerun the tests, and compare
+the preserved 3-failing baseline with the final 6-passing run. It ends by opening
+the ZIP upload flow. Re-record it locally with `make record-demo` while the
+packaged app is running on port 8080. The script uses an already installed
+Chrome/Chromium and macOS screen capture; no browser or third-party service is
+downloaded.
+
+**Live link:** this project is intentionally packaged for local/self-hosted use;
+there is no hosted public deployment. Run the Docker command below and open
+`http://localhost:8080`.
+
 ## Quick start — clean Linux, Docker only
 
 Requirements: Git, Docker Engine with BuildKit, and optionally Docker Compose v2.
