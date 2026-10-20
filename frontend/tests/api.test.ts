@@ -52,3 +52,18 @@ test('report and diff downloads fetch real artifacts and use safe filenames', as
   assert.equal(fetch.mock.calls[1].arguments[0], '/api/analyses/diagnosis-42/patch')
   assert.deepEqual(names, ['owner-repo-report.md', 'owner-repo-patch.diff'])
 })
+
+test('download failures surface structured backend errors without creating a file', async () => {
+  const fetch = mock.method(globalThis, 'fetch', async () => json({ message: 'Report generation is unavailable' }, 503))
+  let objectUrls = 0
+  mock.method(URL, 'createObjectURL', () => { objectUrls += 1; return 'blob:test' })
+
+  await assert.rejects(downloadArtifact('diagnosis-42', 'owner/repo', 'report'), /Report generation is unavailable/)
+
+  fetch.mock.mockImplementation(async () => new Response('upstream unavailable', { status: 503 }))
+  await assert.rejects(downloadArtifact('diagnosis-42', 'owner/repo', 'report'), /Could not download the report \(503\)/)
+
+  fetch.mock.mockImplementation(async () => new Response('', { status: 503 }))
+  await assert.rejects(downloadArtifact('diagnosis-42', 'owner/repo', 'report'), /Could not download the report \(503\)/)
+  assert.equal(objectUrls, 0)
+})

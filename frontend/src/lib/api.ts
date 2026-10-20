@@ -53,7 +53,20 @@ export async function downloadArtifact(id: string, repository: string, kind: 're
   } catch {
     throw new Error('The download could not reach the local engine. Please try again.')
   }
-  if (!response.ok) throw new Error(`Could not download the ${kind} (${response.status}). Please try again.`)
+  if (!response.ok) {
+    const fallback = `Could not download the ${kind} (${response.status}). Please try again.`
+    let message = fallback
+    try {
+      const body = JSON.parse(await response.text()) as { message?: unknown; error?: unknown; detail?: unknown }
+      const structuredMessage = [body.message, body.detail, body.error].find(
+        (value): value is string => typeof value === 'string' && value.trim().length > 0,
+      )
+      if (structuredMessage) message = structuredMessage
+    } catch {
+      // Keep the safe status-based fallback for empty, invalid, or HTML responses.
+    }
+    throw new Error(message)
+  }
   if (response.headers.get('content-type')?.includes('text/html')) {
     throw new Error('The engine returned a page instead of the requested download.')
   }
